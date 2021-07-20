@@ -12,13 +12,6 @@ netcoloc.cli module
    :undoc-members:
    :show-inheritance:
 
-netcoloc.netcoloc\_utils module
--------------------------------
-
-.. automodule:: netcoloc.netcoloc_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 netcoloc.netprop module
 -----------------------
