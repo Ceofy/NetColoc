@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import click
+#import click
 
-from .netprop_zscore import *
+#from .netprop_zscore import *
 
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.argument('seed-gene-file', type=click.Path(exists=True, resolve_path=True))

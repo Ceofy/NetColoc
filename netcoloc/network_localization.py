@@ -4,17 +4,17 @@
 '''
 
 # External library imports
-import copy
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from tqdm.auto import tqdm
-import warnings
+#import copy
+#import matplotlib.pyplot as plt
+#import networkx as nx
+#import numpy as np
+#import pandas as pd
+#import seaborn as sns
+#from tqdm.auto import tqdm
+#import warnings
 
 # Internal module convenience imports
-from .netcoloc_utils import *
+#from .netcoloc_utils import *
 #from netcoloc_utils import *
 
 def __init__(self):

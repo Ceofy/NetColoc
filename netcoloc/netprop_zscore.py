@@ -4,17 +4,17 @@
 '''
 
 # External library imports
-import ndex2
-import networkx as nx
-import numpy as np
-import pandas as pd
-import os
-from tqdm.auto import tqdm
-import warnings
+#import ndex2
+#import networkx as nx
+#import numpy as np
+#import pandas as pd
+#import os
+#from tqdm.auto import tqdm
+#import warnings
 
 # Internal module convenience imports
-from .netcoloc_utils import *
-from .netprop import *
+#from .netcoloc_utils import *
+#from .netprop import *
 #from netcoloc_utils import *
 #from netprop import *
 
