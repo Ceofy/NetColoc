@@ -43,21 +43,22 @@ def calculate_network_overlap(z_scores_1, z_scores_2, z_score_threshold=3,
         list: List of genes in the network overlap (genes with high combined
             z-scores).
     '''
-    z_scores_1 = z_scores_1.to_frame(name='z_scores_1')
-    z_scores_2 = z_scores_2.to_frame(name='z_scores_2')
-    z_scores_joined = z_scores_1.join(z_scores_2)
-    z_scores_combined = (z_scores_joined['z_scores_1'] 
-                        * z_scores_joined['z_scores_2'] 
-                        * (z_scores_joined['z_scores_1'] > 0) 
-                        * (z_scores_joined['z_scores_2'] > 0))
+    #z_scores_1 = z_scores_1.to_frame(name='z_scores_1')
+    #z_scores_2 = z_scores_2.to_frame(name='z_scores_2')
+    #z_scores_joined = z_scores_1.join(z_scores_2)
+    #z_scores_combined = (z_scores_joined['z_scores_1'] 
+     #                   * z_scores_joined['z_scores_2'] 
+      #                  * (z_scores_joined['z_scores_1'] > 0) 
+       #                 * (z_scores_joined['z_scores_2'] > 0))
     # get rid of unlikely genes which have low scores in either z1 or z2
-    high_z_score_genes = z_scores_combined[
-        (z_scores_combined >= z_score_threshold) 
-         & (z_scores_joined['z_scores_1'] > z1_threshold) 
-         & (z_scores_joined['z_scores_2'] > z2_threshold)
-    ].index.tolist()
+    #high_z_score_genes = z_scores_combined[
+     #   (z_scores_combined >= z_score_threshold) 
+      #   & (z_scores_joined['z_scores_1'] > z1_threshold) 
+       #  & (z_scores_joined['z_scores_2'] > z2_threshold)
+    #].index.tolist()
     
-    return high_z_score_genes
+    #return high_z_score_genes
+    pass
 
 def calculate_network_overlap_subgraph(interactome, z_scores_1, z_scores_2, z_score_threshold=3,
                                       z1_threshold=1.5,z2_threshold=1.5):
@@ -89,24 +90,25 @@ def calculate_network_overlap_subgraph(interactome, z_scores_1, z_scores_2, z_sc
         NetworkX graph: Subgraph of the interactome containing only genes that
             are in the network intersection (genes with high combined z-scores).
     '''
-    network_overlap = calculate_network_overlap(z_scores_1, z_scores_2, z_score_threshold=z_score_threshold,
-                                               z1_threshold=z1_threshold,z2_threshold=z1_threshold)
+    #network_overlap = calculate_network_overlap(z_scores_1, z_scores_2, z_score_threshold=z_score_threshold,
+     #                                          z1_threshold=z1_threshold,z2_threshold=z1_threshold)
     
     # Create subgraph that has the same type as original graph
-    network_overlap_subgraph = interactome.__class__()
-    network_overlap_subgraph.add_nodes_from((node, interactome.nodes[node]) for node in network_overlap)
-    if network_overlap_subgraph.is_multigraph():
-        network_overlap_subgraph.add_edges_from((node, neighbor, key, dictionary)
-            for node, neighbors in interactome.adj.items() if node in network_overlap
-            for neighbor, item in neighbors.items() if neighbor in network_overlap
-            for key, dictionary in item.items())
-    else:
-        network_overlap_subgraph.add_edges_from((node, neighbor, dictionary)
-            for node, neighbors in interactome.adj.items() if node in network_overlap
-            for neighbor, dictionary in neighbors.items() if neighbor in network_overlap)
-    network_overlap_subgraph.graph.update(interactome.graph)
+    #network_overlap_subgraph = interactome.__class__()
+    #network_overlap_subgraph.add_nodes_from((node, interactome.nodes[node]) for node in network_overlap)
+    #if network_overlap_subgraph.is_multigraph():
+     #   network_overlap_subgraph.add_edges_from((node, neighbor, key, dictionary)
+      #      for node, neighbors in interactome.adj.items() if node in network_overlap
+       #     for neighbor, item in neighbors.items() if neighbor in network_overlap
+        #    for key, dictionary in item.items())
+    #else:
+     #   network_overlap_subgraph.add_edges_from((node, neighbor, dictionary)
+      #      for node, neighbors in interactome.adj.items() if node in network_overlap
+       #     for neighbor, dictionary in neighbors.items() if neighbor in network_overlap)
+    #network_overlap_subgraph.graph.update(interactome.graph)
     
-    return network_overlap_subgraph
+    #return network_overlap_subgraph
+    pass
 
 def calculate_expected_overlap(z_scores_1, z_scores_2, gene_set_name_1='Gene Set 1', gene_set_name_2='Gene Set 2', 
                                z_score_threshold=3, z1_threshold=1.5,z2_threshold=1.5,
@@ -140,32 +142,32 @@ def calculate_expected_overlap(z_scores_1, z_scores_2, gene_set_name_1='Gene Set
 
     '''
     # Build a distribution of expected network overlap sizes by shuffling node names
-    random_network_overlap_sizes = []
-    z_scores_1_copy = z_scores_1.copy()
-    z_scores_2_copy = z_scores_2.copy()
-    gene_set_1 = z_scores_1.index.tolist()
-    gene_set_2 = z_scores_2.index.tolist()
-    for _ in range(num_reps):
+    #random_network_overlap_sizes = []
+    #z_scores_1_copy = z_scores_1.copy()
+    #z_scores_2_copy = z_scores_2.copy()
+    #gene_set_1 = z_scores_1.index.tolist()
+    #gene_set_2 = z_scores_2.index.tolist()
+    #for _ in range(num_reps):
         # Shuffle gene name labels
-        np.random.shuffle(gene_set_1)
-        z_scores_1_copy.index = gene_set_1
+     #   np.random.shuffle(gene_set_1)
+      #  z_scores_1_copy.index = gene_set_1
 
-        np.random.shuffle(gene_set_2)
-        z_scores_2_copy.index = gene_set_2
+       # np.random.shuffle(gene_set_2)
+        #z_scores_2_copy.index = gene_set_2
 
-        random_size = len(calculate_network_overlap(z_scores_1_copy, z_scores_2_copy, z_score_threshold=z_score_threshold,
-                                                   z1_threshold=z1_threshold,z2_threshold=z2_threshold))
-        random_network_overlap_sizes.append(random_size)
+        #random_size = len(calculate_network_overlap(z_scores_1_copy, z_scores_2_copy, z_score_threshold=z_score_threshold,
+                                                   #z1_threshold=z1_threshold,z2_threshold=z2_threshold))
+        #random_network_overlap_sizes.append(random_size)
     
-    network_overlap_size = len(calculate_network_overlap(z_scores_1, z_scores_2, z_score_threshold=z_score_threshold,
-                                                        z1_threshold=z1_threshold,z2_threshold=z2_threshold))
+    #network_overlap_size = len(calculate_network_overlap(z_scores_1, z_scores_2, z_score_threshold=z_score_threshold,
+                                                    #    z1_threshold=z1_threshold,z2_threshold=z2_threshold))
 
-    if plot:
-        plt.figure(figsize=(5, 4))
-        dfig = sns.histplot(random_network_overlap_sizes, label='Expected network intersection size')
-        plt.vlines(network_overlap_size, ymin=0, ymax=dfig.dataLim.bounds[3], color='r', label='Observed network intersection size')
-        plt.xlabel('Size of proximal subgraph, z > ' + str(z_score_threshold), fontsize=16)
-        plt.legend(fontsize=12)
+    #if plot:
+     #   plt.figure(figsize=(5, 4))
+      #  dfig = sns.histplot(random_network_overlap_sizes, label='Expected network intersection size')
+       # plt.vlines(network_overlap_size, ymin=0, ymax=dfig.dataLim.bounds[3], color='r', label='Observed network intersection size')
+        #plt.xlabel('Size of proximal subgraph, z > ' + str(z_score_threshold), fontsize=16)
+        #plt.legend(fontsize=12)
     
-    return network_overlap_size, random_network_overlap_sizes
-
+    #return network_overlap_size, random_network_overlap_sizes
+    pass

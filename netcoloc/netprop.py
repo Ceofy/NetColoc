@@ -31,42 +31,42 @@ def get_normalized_adjacency_matrix(graph, conserve_heat=True, weighted=False):
         numpy.ndarray: A square normalized adjacency matrix
     '''
     # Create graph
-    if conserve_heat:
+    #if conserve_heat:
         # If conserving heat, make G_weighted a di-graph (not symmetric)
-        graph_weighted= nx.DiGraph()
-    else:
+     #   graph_weighted= nx.DiGraph()
+    #else:
         # If not conserving heat, make G_weighted a simple graph (symmetric)
-        graph_weighted = nx.Graph()
+     #   graph_weighted = nx.Graph()
 
     #Create edge weights
-    edge_weights = []
-    node_to_degree_dict = dict(graph.degree)
-    for e in graph.edges(data=True):
-        v1 = e[0]
-        v2 = e[1]
-        deg1 = node_to_degree_dict[v1]
-        deg2 = node_to_degree_dict[v2]
+    #edge_weights = []
+    #node_to_degree_dict = dict(graph.degree)
+    #for e in graph.edges(data=True):
+     #   v1 = e[0]
+      #  v2 = e[1]
+       # deg1 = node_to_degree_dict[v1]
+        #deg2 = node_to_degree_dict[v2]
         
-        if weighted:
-            weight = e[2]['weight']
-        else:
-            weight = 1
+        #if weighted:
+         #   weight = e[2]['weight']
+        #else:
+         #   weight = 1
         
-        if conserve_heat:
-            edge_weights.append((v1, v2, weight / float(deg2)))
-            edge_weights.append((v2, v1, weight / float(deg1)))
-        else:
-            edge_weights.append((v1, v2, weight / np.sqrt(deg1 * deg2)))
+        #if conserve_heat:
+         #   edge_weights.append((v1, v2, weight / float(deg2)))
+          #  edge_weights.append((v2, v1, weight / float(deg1)))
+        #else:
+         #   edge_weights.append((v1, v2, weight / np.sqrt(deg1 * deg2)))
     
     # Apply edge weights to graph
-    graph_weighted.add_weighted_edges_from(edge_weights)
+    #graph_weighted.add_weighted_edges_from(edge_weights)
     
     # Transform graph to adjacency matrix
-    w_prime = nx.to_numpy_matrix(graph_weighted, nodelist=graph.nodes())
-    w_prime = np.array(w_prime)
+    #w_prime = nx.to_numpy_matrix(graph_weighted, nodelist=graph.nodes())
+    #w_prime = np.array(w_prime)
     
-    return w_prime
-
+    #return w_prime
+    pass
 def get_individual_heats_matrix(normalized_adjacency_matrix, alpha=0.5):
     '''Returns the pre-calculated contributions of each individual gene in the
     interactome to the final heat of each other gene in the interactome after
@@ -84,10 +84,11 @@ def get_individual_heats_matrix(normalized_adjacency_matrix, alpha=0.5):
         numpy.ndarray: A square individual heats matrix.
     '''
 
-    return np.linalg.inv(
-        np.identity(normalized_adjacency_matrix.shape[0]) 
-        - alpha * normalized_adjacency_matrix
-    ) * (1 - alpha)
+    #return np.linalg.inv(
+     #   np.identity(normalized_adjacency_matrix.shape[0]) 
+      #  - alpha * normalized_adjacency_matrix
+    #) * (1 - alpha)
+    pass
 
 def network_propagation(individual_heats_matrix, nodes, seed_genes):
     '''Implements network propagation, as detailed in: Vanunu, Oron, et al. 
@@ -113,17 +114,18 @@ def network_propagation(individual_heats_matrix, nodes, seed_genes):
     '''
 
     # Remove genes that are not in network
-    seed_genes = list(np.intersect1d(nodes, seed_genes))
+    #seed_genes = list(np.intersect1d(nodes, seed_genes))
 
     # Initialize results vector
-    F = np.zeros(len(nodes))
+    #F = np.zeros(len(nodes))
 
     # Add up resulting heats from each gene in seed genes set
-    for gene in seed_genes:
-        F += individual_heats_matrix[:,nodes.index(gene)]
+    #for gene in seed_genes:
+     #   F += individual_heats_matrix[:,nodes.index(gene)]
 
     # Normalize results by number of seed genes
-    F /= len(seed_genes)
+    #F /= len(seed_genes)
 
     #Return as pandas series
-    return pd.Series(F, index=nodes)
+    #return pd.Series(F, index=nodes)
+    pass
