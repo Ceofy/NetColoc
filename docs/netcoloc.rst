@@ -43,12 +43,3 @@ netcoloc.network\_localization module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: netcoloc
-   :members:
-   :undoc-members:
-   :show-inheritance:
